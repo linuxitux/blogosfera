@@ -4,6 +4,10 @@ import urllib2
 import time
 import operator
 
+# File containing domains, one per line
+blogsf = "blogs.txt"
+
+# Alexa Site Overview URL
 url = "http://www.alexa.com/siteinfo/"
 
 # Please, be gentle
@@ -14,11 +18,11 @@ substr1 = "<strong "
 substr2 = "</strong"
 substr3 = "-->"
 
-# List of sites (one per line)
-with open("blogs.txt") as blogs:
+# Get sites list (one per line)
+with open(blogsf) as blogs:
 	sites = blogs.readlines()
 
-# Table to sort by rank
+# Table to store ranks
 results = []
 
 for site in sites:
@@ -41,14 +45,18 @@ for site in sites:
 	results.append(row)
 	time.sleep(sleeptime)
 
-# Print sorted table in HTML format
+# Sort and print table in HTML format
+
 # Print table headers
 print '<table id="alexaranks" class="alexaranks">'
+
 # Print sorted rows (by rank)
 for srow in sorted(results,key=lambda row: row[1]):
 	site, rank = srow
 	# Print line
 	print '<tr><td><a href="http://'+site+'/">'+site+'</a></td><td>'+"{:,}".format(rank)+'</td></tr>'
+
 # Print table closing tag
 print '</table>'
+
 # End
