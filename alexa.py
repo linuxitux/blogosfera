@@ -1,4 +1,10 @@
-# Alexa Site Overview parser
+#!/usr/bin/python
+# Title      : alexa.py
+# Description: Alexa Site Overview parser
+# Author     : linuxitux
+# Date       : 22-08-2016
+# Usage      : ./alexa.py
+# Notes      : Edit blogsf accordingly
 
 import urllib2
 import time
