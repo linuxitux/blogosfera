@@ -5,6 +5,7 @@ deblinux.wordpress.com
 elblogdeliher.com
 elrincondelsoft.blogspot.com
 esbuntu.com
+etccrond.es
 fraterneo.blogspot.com.ar
 gabuntu.com
 h4ckseed.wordpress.com
