@@ -56,11 +56,15 @@ for site in sites:
 # Print table headers
 print '<table id="alexaranks" class="alexaranks">'
 
+# Counter
+count = 1
+
 # Print sorted rows (by rank)
 for srow in sorted(results,key=lambda row: row[1]):
 	site, rank = srow
 	# Print line
-	print '<tr><td><a href="http://'+site+'/">'+site+'</a></td><td>'+"{:,}".format(rank)+'</td></tr>'
+	print '<tr><td>'+str(count)+'</td><td><a href="http://'+site+'/">'+site+'</a></td><td>'+"{:,}".format(rank)+'</td></tr>'
+	count = count+1
 
 # Print table closing tag
 print '</table>'
