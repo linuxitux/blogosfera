@@ -9,6 +9,7 @@
 import urllib2
 import time
 import operator
+import datetime
 
 # File containing domains, one per line
 blogsf = "blogs.txt"
@@ -53,6 +54,24 @@ for site in sites:
 
 # Sort and print table in HTML format
 
+# Print style
+
+print """
+<style>
+.alexaranks {
+font-family: monospace;
+font-size: 13px;
+color: #333;
+}
+a, a:active, a:focus, a:visited {
+color: #2c9c30;
+}
+</style>
+"""
+
+# Print date
+print '<p class="alexaranks"><i>Actualizado: '+datetime.date.today().strftime('%d/%m/%Y')+'</i></p>'
+
 # Print table headers
 print '<table id="alexaranks" class="alexaranks">'
 
@@ -63,10 +82,11 @@ count = 1
 for srow in sorted(results,key=lambda row: row[1]):
 	site, rank = srow
 	# Print line
-	print '<tr><td>'+str(count)+'</td><td><a href="http://'+site+'/">'+site+'</a></td><td>'+"{:,}".format(rank)+'</td></tr>'
+	print '<tr><td>'+str(count)+'</td><td><a href="http://'+site+'/">'+site+'</a></td><td style="text-align: right;">'+"{:,}".format(rank)+'</td></tr>'
 	count = count+1
 
 # Print table closing tag
 print '</table>'
+print '<p> </p>'
 
 # End
