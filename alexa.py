@@ -7,12 +7,13 @@
 # Notes      : Edit blogsf accordingly
 
 import urllib2
+import sys
 import time
 import operator
 import datetime
 
 # File containing domains, one per line
-blogsf = "blogs.txt"
+blogsf = "~/blogs.txt"
 
 # Alexa Site Overview URL
 url = "http://www.alexa.com/siteinfo/"
@@ -27,30 +28,35 @@ substr3 = "-->"
 
 # Get sites list (one per line)
 with open(blogsf) as blogs:
-	sites = blogs.readlines()
+  sites = blogs.readlines()
 
 # Table to store ranks
 results = []
 
 for site in sites:
-	# Get page
-	req = urllib2.Request(url=url+site)
-	p = urllib2.urlopen(req)
-	resp = p.read()
-	# Parse HTML response
-	resp = resp[resp.index(substr1):]
-	resp = resp[:resp.index(substr2)]
-	resp = resp[resp.index(substr3)+3:]
-	resp = resp.replace(" ","")
-	rank = resp.replace("\n","")
-	# Discard newline in site
-	site = site.replace("\n","")
-	# Discard commas in rank
-	rank = rank.replace(",","")
-	# Store (site,rank) pair in table
-	row = (site,int(rank))
-	results.append(row)
-	time.sleep(sleeptime)
+  # Get page
+  req = urllib2.Request(url=url+site)
+  p = urllib2.urlopen(req)
+  resp = p.read()
+  # Parse HTML response
+  resp = resp[resp.index(substr1):]
+  resp = resp[:resp.index(substr2)]
+  resp = resp[resp.index(substr3)+3:]
+  resp = resp.replace(" ","")
+  rank = resp.replace("\n","")
+  # Discard newline in site
+  site = site.replace("\n","")
+  # Discard commas in rank
+  rank = rank.replace(",","")
+  # Store (site,rank) pair in table
+  try:
+    row = (site,int(rank))
+    results.append(row)
+  except Exception:
+    print >> sys.stderr, site+" has no rank"
+    row = (site,0)
+    results.append(row)
+  time.sleep(sleeptime)
 
 # Sort and print table in HTML format
 
@@ -80,10 +86,11 @@ count = 1
 
 # Print sorted rows (by rank)
 for srow in sorted(results,key=lambda row: row[1]):
-	site, rank = srow
-	# Print line
-	print '<tr><td>'+str(count)+'</td><td><a href="http://'+site+'/">'+site+'</a></td><td style="text-align: right;">'+"{:,}".format(rank)+'</td></tr>'
-	count = count+1
+  site, rank = srow
+  # Print line, if rank not zero
+  if rank > 0:
+    print '<tr><td>'+str(count)+'</td><td><a href="http://'+site+'/">'+site+'</a></td><td style="text-align: right;">'+"{:,}".format(rank)+'</td></tr>'
+    count = count+1
 
 # Print table closing tag
 print '</table>'
