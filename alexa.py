@@ -26,6 +26,12 @@ substr1 = "<strong "
 substr2 = "</strong"
 substr3 = "-->"
 
+# Get current date
+date = time.strftime("%Y-%m-%d")
+
+# Database <--- facepalm
+outfile = open("~/ranks_"+date, "w")
+
 # Get sites list (one per line)
 with open(blogsf) as blogs:
   sites = blogs.readlines()
@@ -90,10 +96,14 @@ for srow in sorted(results,key=lambda row: row[1]):
   # Print line, if rank not zero
   if rank > 0:
     print '<tr><td>'+str(count)+'</td><td><a href="http://'+site+'/">'+site+'</a></td><td style="text-align: right;">'+"{:,}".format(rank)+'</td></tr>'
+    outfile.write(site+","+str(rank)+"\n")
     count = count+1
 
 # Print table closing tag
 print '</table>'
 print '<p> </p>'
+
+# "Disconnect" from "database"
+outfile.close()
 
 # End
