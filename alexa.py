@@ -6,7 +6,7 @@
 # Usage      : ./alexa.py
 # Notes      : Edit blogsf accordingly
 
-import urllib2
+import urllib.request, urllib.error, urllib.parse
 import sys
 import time
 import operator
@@ -41,15 +41,15 @@ results = []
 
 for site in sites:
   # Get page
-  req = urllib2.Request(url=url+site)
-  p = urllib2.urlopen(req)
-  resp = p.read()
+  req = urllib.request.Request(url=url+site)
+  p = urllib.request.urlopen(req)
+  resp = str(p.read())
   # Parse HTML response
   resp = resp[resp.index(substr1):]
   resp = resp[:resp.index(substr2)]
   resp = resp[resp.index(substr3)+3:]
   resp = resp.replace(" ","")
-  rank = resp.replace("\n","")
+  rank = resp.lstrip('\\n')
   # Discard newline in site
   site = site.replace("\n","")
   # Discard commas in rank
@@ -59,7 +59,7 @@ for site in sites:
     row = (site,int(rank))
     results.append(row)
   except Exception:
-    print >> sys.stderr, site+" has no rank"
+    print(site+" has no rank", file=sys.stderr)
     row = (site,0)
     results.append(row)
   time.sleep(sleeptime)
@@ -68,7 +68,7 @@ for site in sites:
 
 # Print style
 
-print """
+print("""
 <style>
 .alexaranks {
 font-family: monospace;
@@ -79,13 +79,13 @@ a, a:active, a:focus, a:visited {
 color: #2c9c30;
 }
 </style>
-"""
+""")
 
 # Print date
-print '<p class="alexaranks"><i>Actualizado: '+datetime.date.today().strftime('%d/%m/%Y')+'</i></p>'
+print('<p class="alexaranks"><i>Actualizado: '+datetime.date.today().strftime('%d/%m/%Y')+'</i></p>')
 
 # Print table headers
-print '<table id="alexaranks" class="alexaranks">'
+print('<table id="alexaranks" class="alexaranks">')
 
 # Counter
 count = 1
@@ -95,13 +95,13 @@ for srow in sorted(results,key=lambda row: row[1]):
   site, rank = srow
   # Print line, if rank not zero
   if rank > 0:
-    print '<tr><td>'+str(count)+'</td><td><a href="http://'+site+'/">'+site+'</a></td><td style="text-align: right;">'+"{:,}".format(rank)+'</td></tr>'
+    print('<tr><td>'+str(count)+'</td><td><a href="http://'+site+'/">'+site+'</a></td><td style="text-align: right;">'+"{:,}".format(rank)+'</td></tr>')
     outfile.write(site+","+str(rank)+"\n")
     count = count+1
 
 # Print table closing tag
-print '</table>'
-print '<p> </p>'
+print('</table>')
+print('<p> </p>')
 
 # "Disconnect" from "database"
 outfile.close()
