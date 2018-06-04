@@ -9,17 +9,14 @@ cambiadeso.es
 elblogdeliher.com
 elrincondelsoft.blogspot.com
 esbuntu.com
-fernandoboladogarcia.blogspot.com
 fraterneo.blogspot.com.ar
 freakspot.net
 frikinux.blogspot.com
 gabuntu.com
-gnulinuxdocs.wordpress.com
 h4ckseed.wordpress.com
 hackingthesystem4fun.blogspot.com.ar
 hvivani.com.ar
 ikasten.io
-itfreekzone.blogspot.com.ar
 jmbernal.com
 jvare.com
 kdeblog.com
@@ -43,7 +40,6 @@ securitybydefault.com
 sysadmit.com
 systemadmin.es
 systeminside.net
-thalskarth.com
 ubunlog.com
 ubuntulife.wordpress.com
 usrweblog.blogspot.com
@@ -55,4 +51,3 @@ www.elblogderigo.info
 www.ingenieroinformatico.org
 www.martinezmartinez.eu
 www.ochobitshacenunbyte.com
-www.ubuntronics.com
