@@ -27,6 +27,7 @@ linuxgnublog.org
 linuxito.com
 linuxmanr4.com
 luisaitorgonzalez.com
+mascandobits.es
 memoriasdeunsysadmin.info
 mundoitblog.wordpress.com
 neositelinux.com
