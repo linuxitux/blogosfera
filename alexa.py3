@@ -22,9 +22,9 @@ url = "http://www.alexa.com/siteinfo/"
 sleeptime = 3
 
 # Rank delimiters
-substr1 = "<strong "
-substr2 = "</strong"
-substr3 = "-->"
+substr1 = '<p class="big data">'
+substr2 = "</p"
+substr3 = "</span>"
 
 # Get current date
 date = time.strftime("%Y-%m-%d")
@@ -45,11 +45,16 @@ for site in sites:
   p = urllib.request.urlopen(req)
   resp = str(p.read())
   # Parse HTML response
-  resp = resp[resp.index(substr1):]
-  resp = resp[:resp.index(substr2)]
-  resp = resp[resp.index(substr3)+3:]
-  resp = resp.replace(" ","")
-  rank = resp.lstrip('\\n')
+  try:
+    resp = resp[resp.index(substr1):]
+    resp = resp[:resp.index(substr2)]
+    resp = resp[resp.index(substr3)+len(substr3):]
+    resp = resp.replace(" ","").rstrip("\\n\\t")
+  except ValueError:
+    # When Alexa doesn't have enough data to output a ranking score
+    resp = '0'
+
+  rank = resp
   # Discard newline in site
   site = site.replace("\n","")
   # Discard commas in rank
